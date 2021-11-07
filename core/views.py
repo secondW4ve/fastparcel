@@ -30,7 +30,8 @@ def sign_up(request):
       user.username = email
       user.save()
 
-      login(request, user)
+
+      login(request, user, backend='django.contrib.auth.backends.ModelBacked')
       return redirect('/')
 
   return render(request, 'sign_up.html', {

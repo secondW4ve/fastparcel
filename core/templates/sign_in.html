@@ -28,6 +28,10 @@
               New to Fast Parcel? <a href="/sign-up/?next={{ request.GET.next }}"><b>Sign Up</b></a>
             </p>
           </form>
+          <hr>
+          <a href="{% url 'social:begin' 'facebook' %}?next={{ request.GET.next }}" class="btn btn-outline-primary btn-block">
+            Sign In with Facebook
+          </a>
         </div>
       </div>
     </div>
