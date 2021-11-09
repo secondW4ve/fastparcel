@@ -2,6 +2,9 @@ from django.forms import forms
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 from core.customer import forms
 
@@ -23,6 +26,8 @@ def profile_page(request):
     if user_form.is_valid() and customer_form.is_valid():
       user_form.save()
       customer_form.save()
+
+      messages.success(request, 'Your profile has been updated')
       return redirect(reverse('customer:profile'))
 
   return render(request, 'customer/profile.html', {
