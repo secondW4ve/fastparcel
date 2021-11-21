@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-zzFWPQZUbwJC7qcBlLTPRvVVfOQTw4g&callback=initMap&libraries=places&v=weekly"
+  <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAP_API_KEY }}&callback=initMap&libraries=places&v=weekly"
   defer></script>
 
   <style>
