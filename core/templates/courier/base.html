@@ -9,11 +9,61 @@
   {% load bootstrap4 %}
   {% bootstrap_css %}
   {% bootstrap_javascript jquery='full' %}
+  {% include 'load_firebase.html' %}
+
+  <script>
+    const messaging = firebase.messaging();
+    messaging.getToken({
+      validKey: "BNiSrmNhrdKolYqAsv5tKtTZjHMl_VyZgFEUYaM-qE3Hp-txRbBkBKiWEc8iT0bBbUUkfRv72-PlyP6DiZAJpX8"
+    }).then((current_token) => {
+      console.log(current_token);
+
+      if (current_token) {
+        fetch('{% url "courier:fcm_token_update_api" %}?fcm_token=' + current_token)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  </script>
+
+  <script>
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  </script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+
+  <style>
+    #content {
+      height: calc(var(--vh, 1vh) * 100);
+    }
+  </style>
 
   {% block head %}{% endblock %}
 </head>
 <body>
-  {% block content %}{% endblock %}
+  <div id="content">
+    {% block content %}{% endblock %}
+  </div>
+
+  <script src="https://unpkg.com/bootoast@1.0.1/dist/bootoast.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/bootoast@1.0.1/dist/bootoast.min.css">
+
+  <script>
+    function toast(message, type) {
+      bootoast.toast({
+        position: 'centerBottom',
+        message,
+        type,
+      });
+    }
+
+    {% if messages %}
+
+      {% for message in messages %}
+        toast('{{ message }}', '{{ message.text }}');
+      {% endfor %}
+
+    {% endif %}
+  </script>
 </body>
 </html>
